@@ -1,28 +1,31 @@
-import { globalIgnores } from 'eslint/config'
-import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
-import pluginVue from 'eslint-plugin-vue'
-import pluginVitest from '@vitest/eslint-plugin'
-import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
-
-// To allow more languages other than `ts` in `.vue` files, uncomment the following lines:
-// import { configureVueProject } from '@vue/eslint-config-typescript'
-// configureVueProject({ scriptLangs: ['ts', 'tsx'] })
-// More info at https://github.com/vuejs/eslint-config-typescript/#advanced-setup
+import { defineConfigWithVueTs, vueTsConfigs } from "@vue/eslint-config-typescript";
+import js from "@eslint/js";
+import pluginVue from "eslint-plugin-vue";
+import prettierConfig from "@vue/eslint-config-prettier";
 
 export default defineConfigWithVueTs(
-  {
-    name: 'app/files-to-lint',
-    files: ['**/*.{ts,mts,tsx,vue}'],
-  },
-
-  globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**']),
-
-  pluginVue.configs['flat/essential'],
+  js.configs.recommended,
+  pluginVue.configs["flat/recommended"],
+  prettierConfig,
   vueTsConfigs.recommended,
-  
+  { ignores: ["node_modules/**", "dist/", ".gitignore"] },
   {
-    ...pluginVitest.configs.recommended,
-    files: ['src/**/__tests__/*'],
+    files: ["**/*.{vue,js,jsx,cjs,mjs,ts,tsx,cts,mts}"],
+    languageOptions: {
+      ecmaVersion: "latest",
+    },
+    rules: {
+      complexity: "warn",
+      "dot-notation": "warn",
+      eqeqeq: "error",
+      "func-style": "warn",
+      "new-cap": "warn",
+      "no-console": "error",
+      "no-duplicate-imports": "error",
+      "no-explicit-any": "off",
+      "no-extra-bind": "warn",
+      "no-use-before-define": "error",
+      "sort-imports": ["error", { ignoreCase: true, allowSeparatedGroups: true }],
+    },
   },
-  skipFormatting,
-)
+);

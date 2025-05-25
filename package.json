@@ -3,17 +3,29 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "main": "dist/vue-js/vue-geojson-regions-map.js",
+  "module": "dist/vue-js/vue-geojson-regions-map.umd.cjs",
+  "exports": {
+    ".": {
+      "import": "./dist/vue-js/vue-geojson-regions-map.js",
+      "require": "./dist/vue-js/vue-geojson-regions-map.umd.cjs"
+    }
+  },
   "scripts": {
     "dev": "vite",
-    "build": "run-p type-check \"build-only {@}\" --",
+    "build": "run-p lint:types \"build-only {@}\" --",
     "preview": "vite preview",
     "test:unit": "vitest",
     "build-only": "vite build",
-    "type-check": "vue-tsc --build",
-    "lint": "eslint . --fix",
-    "format": "prettier --write src/"
+    "all-checks": "run-p lint lint:types format:check",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "lint:types": "vue-tsc --noEmit",
+    "format:fix": "prettier --write src/",
+    "format:check": "prettier --check src/"
   },
   "dependencies": {
+    "ol": "^10.5.0",
     "vue": "^3.5.13"
   },
   "devDependencies": {
