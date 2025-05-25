@@ -1,5 +1,6 @@
 {
   "name": "vue-geojson-regions-map",
+  "description": " A Vue.js component for displaying GeoJSON features with a colour map and pan and zoom features.",
   "version": "0.0.1",
   "private": false,
   "type": "module",
