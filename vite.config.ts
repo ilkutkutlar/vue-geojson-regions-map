@@ -12,6 +12,14 @@ export default defineConfig({
       name: "vue-js-geojson-regions-map",
       fileName: "vue-js-geojson-regions-map",
     },
+    rollupOptions: {
+      external: ["vue"],
+      output: {
+        globals: {
+          vue: "Vue",
+        },
+      },
+    },
   },
   plugins: [vue(), vueDevTools()],
   resolve: {
