@@ -36,6 +36,10 @@ export default {
       type: String,
       default: "light",
     },
+    customView: {
+      type: View,
+      default: undefined,
+    },
   },
   emits: ["regionPointerMove", "regionSingleClick", "update:highlightedRegionId"],
   data() {
@@ -107,12 +111,15 @@ export default {
   },
   mounted() {
     this.regionsLayer = this.createRegionsLayer();
-    this.view = new View({
-      center: [0, 0],
-      minZoom: 7,
-      zoom: 7,
-      maxZoom: 11,
-    });
+    this.view =
+      this.customView ??
+      new View({
+        center: [0, 0],
+        minZoom: 7,
+        zoom: 7,
+        maxZoom: 11,
+      });
+
     this.map = new OpenLayersMap({
       layers: [this.regionsLayer],
       target: "map",

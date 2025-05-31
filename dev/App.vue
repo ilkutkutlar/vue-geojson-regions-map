@@ -1,4 +1,6 @@
 <script lang="ts">
+import View from "ol/View";
+
 export default {
   data() {
     return {
@@ -14,6 +16,15 @@ export default {
         ["two", "#008000"],
         ["three", "#0000FF"],
       ]);
+    },
+    customView() {
+      return new View({
+        center: [618938, 691310],
+        minZoom: 9,
+        zoom: 10,
+        maxZoom: 11,
+        extent: [484514, 613274, 760505, 772324],
+      });
     },
   },
   methods: {
@@ -41,6 +52,7 @@ export default {
     :selected-region-id="selectedRegionId"
     :region-colours="regionColours"
     :geo-json-file-path="geoJsonFilePath"
+    :custom-view="customView"
     @region-single-click="selectRegion"
     @region-pointer-move="highlightRegion"
   />
