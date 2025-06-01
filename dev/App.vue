@@ -6,7 +6,7 @@ export default {
     return {
       highlightedRegionId: "",
       selectedRegionId: "",
-      geoJsonFilePath: "./dev/test.geojson",
+      geoJsonFilePath: "./dev/sample.geojson",
     };
   },
   computed: {
@@ -23,7 +23,7 @@ export default {
         minZoom: 9,
         zoom: 10,
         maxZoom: 11,
-        extent: [484514, 613274, 760505, 772324],
+        extent: [398434, 557970, 844746, 834924],
       });
     },
   },
@@ -48,10 +48,10 @@ export default {
 
 <template>
   <RegionsMap
-    v-model:highlighted-region-id="highlightedRegionId"
+    :geo-json-file-path="geoJsonFilePath"
+    :highlighted-region-id="highlightedRegionId"
     :selected-region-id="selectedRegionId"
     :region-colours="regionColours"
-    :geo-json-file-path="geoJsonFilePath"
     :custom-view="customView"
     @region-single-click="selectRegion"
     @region-pointer-move="highlightRegion"

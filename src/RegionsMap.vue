@@ -12,21 +12,21 @@ import View from "ol/View.js";
 
 export default {
   props: {
-    highlightedRegionId: {
-      type: String,
-      required: true,
-    },
-    selectedRegionId: {
-      type: String,
-      required: true,
-    },
     geoJsonFilePath: {
       type: String,
       required: true,
     },
+    highlightedRegionId: {
+      type: String,
+      default: "",
+    },
+    selectedRegionId: {
+      type: String,
+      default: "",
+    },
     regionColours: {
       type: Map<number | string | undefined, string>,
-      required: true,
+      default: new Map(),
     },
     regionNoDataColour: {
       type: String,
@@ -176,22 +176,27 @@ export default {
       });
     },
     createRegionsLayer(): VectorImageLayer {
+      const stroke = new Stroke({ width: 1, color: [10, 10, 10, 0.5] });
+      const defaultStyle = new Style({
+        fill: new Fill({ color: this.regionNoDataColour }),
+        stroke: stroke,
+      });
+
       const styleFunction = (feature: Feature): Style => {
         const regionColour = this.regionColours.get(feature.getId());
-        return new Style({
-          fill: new Fill({ color: regionColour ?? this.regionNoDataColour }),
-          stroke: new Stroke({ width: 1, color: [10, 10, 10, 0.5] }),
-        });
+        return regionColour
+          ? new Style({ fill: new Fill({ color: regionColour }), stroke: stroke })
+          : defaultStyle;
       };
 
       return new VectorImageLayer({
         background: this.backgroundColour,
         imageRatio: 2,
+        style: this.regionColours.size > 0 ? (styleFunction.bind(this) as StyleLike) : defaultStyle,
         source: new VectorSource({
           url: this.geoJsonFilePath,
           format: new GeoJSON({}),
         }),
-        style: styleFunction.bind(this) as StyleLike,
       });
     },
     getFeatureByRegionId(regionId: string): Feature | undefined {
