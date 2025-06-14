@@ -1,6 +1,8 @@
 # Vue.js GeoJSON Regions Map
 
-Vue.js GeoJSON Regions Map is a simple plugin providing a `RegionsMap` component. This component uses OpenLayers to display a given GeoJSON file where you can pan, zoom, and interact with the features in your GeoJSON file. Additionally, you can pass a colour map to allow setting the fill colour of each feature. This is useful for apps where you want to set the fill colour of each region in a map to visualise regional data.
+Vue.js GeoJSON Regions Map is a simple plugin providing a `RegionsMap` component. This component uses [OpenLayers](https://openlayers.org/) to load and display a given GeoJSON file where you can pan, zoom, and interact with the features in your GeoJSON file. Additionally, you can pass a colour map to allow setting the fill colour of each feature. This is useful for apps where you want to visualise regional data by colouring each region on a map according to a key.
+
+To see its usage in a real project, you can see my project [UK Regional Data Visualiser](https://github.com/ilkutkutlar/uk-regional-data-visualiser), which you can [see in action here](https://ilkutkutlar.github.io/uk-regional-data-visualiser/).
 
 ## Installation
 
