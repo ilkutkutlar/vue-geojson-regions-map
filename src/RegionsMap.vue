@@ -211,11 +211,3 @@ export default {
 <template>
   <div v-once id="map" class="map"></div>
 </template>
-
-<style>
-.map {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-}
-</style>
