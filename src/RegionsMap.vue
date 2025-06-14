@@ -11,6 +11,7 @@ import VectorSource from "ol/source/Vector.js";
 import View from "ol/View.js";
 
 export default {
+  name: "RegionsMap",
   props: {
     geoJsonFilePath: {
       type: String,

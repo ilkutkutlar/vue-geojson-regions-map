@@ -1,10 +1,8 @@
 import type { App } from "vue";
 import RegionsMap from "./RegionsMap.vue";
 
-const RegionsMapPlugin = {
+export default {
   install(app: App) {
     app.component("RegionsMap", RegionsMap);
   },
 };
-
-export default RegionsMapPlugin;
