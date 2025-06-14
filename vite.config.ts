@@ -1,5 +1,6 @@
 import { fileURLToPath, URL } from "node:url";
 import { defineConfig } from "vite";
+import dts from "vite-plugin-dts";
 import { resolve } from "node:path";
 import vue from "@vitejs/plugin-vue";
 
@@ -19,7 +20,7 @@ export default defineConfig({
       },
     },
   },
-  plugins: [vue()],
+  plugins: [dts({ tsconfigPath: "./tsconfig.app.json", insertTypesEntry: true }), vue()],
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),

@@ -1,7 +1,7 @@
 {
   "name": "vue-geojson-regions-map",
   "description": "A Vue.js component for displaying GeoJSON features with a colour map and pan and zoom features.",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "repository": {
     "type": "git",
     "url": "https://github.com/ilkutkutlar/vue-geojson-regions-map"
@@ -22,8 +22,10 @@
   ],
   "main": "./dist/vue-geojson-regions-map.umd.cjs",
   "module": "./dist/vue-geojson-regions-map.js",
+  "types": "./dist/vue-geojson-regions-map.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/vue-geojson-regions-map.d.ts",
       "import": "./dist/vue-geojson-regions-map.js",
       "require": "./dist/vue-geojson-regions-map.umd.cjs"
     }
