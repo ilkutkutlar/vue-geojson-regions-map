@@ -6,7 +6,11 @@ To see its usage in a real project, you can see my project [UK Regional Data Vis
 
 ## Installation
 
-<!-- TODO: write this once package has been published -->
+Install with `npm`:
+
+```bash
+npm install vue-geojson-regions-map --save
+```
 
 ## Usage
 
