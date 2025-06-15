@@ -1,14 +1,15 @@
 <script lang="ts">
-import { defaults, DragPan } from "ol/interaction.js";
-import { Feature, MapBrowserEvent } from "ol";
-import { Fill, Stroke, Style } from "ol/style.js";
-import GeoJSON from "ol/format/GeoJSON.js";
-import OpenLayersMap from "ol/Map.js";
+import { defaults, DragPan } from "ol/interaction";
+import { Fill, Stroke, Style } from "ol/style";
+import Feature from "ol/Feature";
+import GeoJSON from "ol/format/GeoJSON";
+import type MapBrowserEvent from "ol/MapBrowserEvent";
+import OpenLayersMap from "ol/Map";
 import { type StyleLike } from "ol/style/Style";
-import VectorImageLayer from "ol/layer/VectorImage.js";
-import VectorLayer from "ol/layer/Vector.js";
-import VectorSource from "ol/source/Vector.js";
-import View from "ol/View.js";
+import VectorImageLayer from "ol/layer/VectorImage";
+import VectorLayer from "ol/layer/Vector";
+import VectorSource from "ol/source/Vector";
+import View from "ol/View";
 
 export default {
   name: "RegionsMap",
@@ -37,9 +38,9 @@ export default {
       type: String,
       default: "light",
     },
-    customView: {
-      type: View,
-      default: undefined,
+    extraViewOptions: {
+      type: Object,
+      default: Object,
     },
   },
   emits: ["regionPointerMove", "regionSingleClick", "update:highlightedRegionId"],
@@ -112,14 +113,13 @@ export default {
   },
   mounted() {
     this.regionsLayer = this.createRegionsLayer();
-    this.view =
-      this.customView ??
-      new View({
-        center: [0, 0],
-        minZoom: 7,
-        zoom: 7,
-        maxZoom: 11,
-      });
+    this.view = new View({
+      center: [0, 0],
+      minZoom: 7,
+      zoom: 7,
+      maxZoom: 11,
+      ...this.extraViewOptions,
+    });
 
     this.map = new OpenLayersMap({
       layers: [this.regionsLayer],
@@ -138,7 +138,7 @@ export default {
       }),
     });
 
-    this.map.on("singleclick", (e: MapBrowserEvent<UIEvent>) => {
+    this.map.on("singleclick", (e: MapBrowserEvent<KeyboardEvent | WheelEvent | PointerEvent>) => {
       if (e.dragging) return;
 
       const feature = this.map?.forEachFeatureAtPixel(e.pixel, (f) => f);
@@ -147,7 +147,7 @@ export default {
       this.$emit("regionSingleClick", feature.getId());
     });
 
-    this.map.on("pointermove", (e: MapBrowserEvent<UIEvent>) => {
+    this.map.on("pointermove", (e: MapBrowserEvent<KeyboardEvent | WheelEvent | PointerEvent>) => {
       if (e.dragging) return;
 
       const feature = this.map?.forEachFeatureAtPixel(e.pixel, (f) => f);
@@ -169,7 +169,12 @@ export default {
       this.featureOverlay?.getSource()?.removeFeature(regionFeature);
     },
     centreOnRegion(regionFeature: Feature) {
-      this.view?.fit(regionFeature.getGeometry(), {
+      const maybeExtent = regionFeature.getGeometry()?.getExtent();
+      if (!maybeExtent) {
+        throw new Error("Centring on region failed: region is unrecognised");
+      }
+
+      this.view?.fit(maybeExtent, {
         padding: [0, 200, 0, 0],
         duration: 400,
         // If we are already zoomed in more than the desired level, don't zoom out.

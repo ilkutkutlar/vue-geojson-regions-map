@@ -17,14 +17,14 @@ export default {
         ["three", "#0000FF"],
       ]);
     },
-    customView() {
-      return new View({
+    extraViewOptions() {
+      return {
         center: [618938, 691310],
         minZoom: 9,
         zoom: 10,
         maxZoom: 11,
         extent: [398434, 557970, 844746, 834924],
-      });
+      };
     },
   },
   methods: {
@@ -52,7 +52,7 @@ export default {
     :highlighted-region-id="highlightedRegionId"
     :selected-region-id="selectedRegionId"
     :region-colours="regionColours"
-    :custom-view="customView"
+    :extra-view-options="extraViewOptions"
     @region-single-click="selectRegion"
     @region-pointer-move="highlightRegion"
   />
