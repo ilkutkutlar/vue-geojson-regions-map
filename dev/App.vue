@@ -1,6 +1,4 @@
 <script lang="ts">
-import View from "ol/View";
-
 export default {
   data() {
     return {
